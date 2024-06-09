@@ -3,7 +3,7 @@ import { readEvents, writeEvents } from '@/utils/fileHandler';
 export async function GET() {
     try {
         const events = await readEvents();
-        return Response.json({events});
+        return Response.json({ data: events, message: 'Events fetched successfully', code: 200, success: true }, { status: 200 });
     } catch {
         return Response.json({ message: 'Error adding event', code: 500, success: false }, { status: 500 });
     }
