@@ -4,7 +4,7 @@
 import { PUT, DELETE, GET } from "./route";
 import { readEvents } from '@/utils/fileHandler';
 
-describe('GET /events/:id', () => {
+describe('GET /auth/events/:id', () => {
   it('should return an event', async () => {
     const events = await readEvents();
 
@@ -27,7 +27,7 @@ describe('GET /events/:id', () => {
   });
 });
 
-describe('PUT /events/:id', () => {
+describe('PUT /auth/events/:id', () => {
   it('should update an event', async () => {
     const events = await readEvents();
 
@@ -64,7 +64,7 @@ describe('PUT /events/:id', () => {
   });
 });
 
-describe('DELETE /events/:id', () => {
+describe('DELETE /auth/events/:id', () => {
   it('should delete an event', async () => {
     const events = await readEvents();
 

@@ -5,22 +5,6 @@
     "totalParticipants": 70,
     "startDate": "2024-07-01",
     "endDate": "2024-07-02",
-    "id": "1717918574013"
-  },
-  {
-    "title": "What the sigma",
-    "description": "This is a new event",
-    "totalParticipants": 70,
-    "startDate": "2024-07-01",
-    "endDate": "2024-07-02",
-    "id": "1717919603086"
-  },
-  {
-    "title": "What the sigma",
-    "description": "This is a new event",
-    "totalParticipants": 70,
-    "startDate": "2024-07-01",
-    "endDate": "2024-07-02",
     "id": "1717919754616"
   },
   {
@@ -38,5 +22,21 @@
     "startDate": "2024-10-24",
     "endDate": "2024-11-05",
     "id": "1717946199916"
+  },
+  {
+    "title": "What the sigma",
+    "description": "This is a new event",
+    "totalParticipants": 70,
+    "startDate": "2024-07-01",
+    "endDate": "2024-07-02",
+    "id": "1717951086373"
+  },
+  {
+    "title": "What the sigma",
+    "description": "This is a new event",
+    "totalParticipants": 70,
+    "startDate": "2024-07-01",
+    "endDate": "2024-07-02",
+    "id": "1717951142519"
   }
 ]

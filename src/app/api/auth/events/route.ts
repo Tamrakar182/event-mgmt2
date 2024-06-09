@@ -21,7 +21,7 @@ export async function GET(req: Request) {
 
         return Response.json({ data: filteredEvents, message: 'Events fetched successfully', code: 200, success: true }, { status: 200 });
     } catch {
-        return Response.json({ message: 'Error adding event', code: 500, success: false }, { status: 500 });
+        return Response.json({ message: 'Error fetching event', code: 500, success: false }, { status: 500 });
     }
 }
 

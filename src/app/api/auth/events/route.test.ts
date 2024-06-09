@@ -4,7 +4,7 @@
 import { readEvents } from '@/utils/fileHandler';
 import { POST, GET } from './route';
 
-describe('GET /events', () => {
+describe('GET /auth/events', () => {
     it('should get all events', async () => {
         const mockReq = {
             json: jest.fn(),
@@ -26,7 +26,7 @@ describe('GET /events', () => {
     });
 });
 
-describe('POST /events', () => {
+describe('POST /auth/events', () => {
     it('should create a new event', async () => {
         const requestObj = {
             json: async () => ({

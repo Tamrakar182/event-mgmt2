@@ -53,7 +53,7 @@ const EventCreateEditForm = ({ event }: Props) => {
     const onSubmit = async (data: any) => {
         try {
             if (event) {
-                const res = await api.put(`/events/${event.id}/`, data);
+                const res = await api.put(`/auth/events/${event.id}/`, data);
                 if (res.data.success) {
                     Snackbar.success("Successfully updated the event.");
                     router.push("/events");
@@ -62,7 +62,7 @@ const EventCreateEditForm = ({ event }: Props) => {
                     Snackbar.error(res.data.message);
                 }
             }
-            const res = await api.post("/events/", data);
+            const res = await api.post("/auth/events/", data);
             if (res.data.success) {
                 Snackbar.success("Successfully added the new event.");
                 router.push("/events");

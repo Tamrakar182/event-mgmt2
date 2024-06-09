@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import SnackbarProvider from "@/context/SnackbarProvider";
+import { AuthProvider } from "@/context/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,9 +13,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SnackbarProvider>
-          {children}
-        </SnackbarProvider>
+        <AuthProvider>
+          <SnackbarProvider>
+            {children}
+          </SnackbarProvider>
+        </AuthProvider>
       </body>
     </html>
   );
