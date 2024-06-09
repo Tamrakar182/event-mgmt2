@@ -1,4 +1,5 @@
 import { readEvents, writeEvents } from '@/utils/fileHandler';
+import { createEventSchema } from '@/types/schemas';
 
 export async function GET() {
     try {
@@ -18,7 +19,13 @@ export async function POST(req: Request) {
             return Response.json({ message: 'No event data provided', code: 400, success: false }, { status: 400 });
         }
 
-        const newEvent = { ...body, id: Date.now().toString() };
+        const parsedData = createEventSchema.safeParse(body);
+
+        if (!parsedData.success) {
+            return Response.json({ message: 'Invalid event data', code: 400, success: false }, { status: 400 });
+        }
+
+        const newEvent = { ...parsedData.data, id: Date.now().toString() };
         events.push(newEvent);
         await writeEvents(events);
         return Response.json({ data: newEvent, message: 'Event added successfully', code: 201, success: true }, { status: 201 });

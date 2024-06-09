@@ -1,4 +1,5 @@
 import { readEvents, writeEvents } from '@/utils/fileHandler';
+import { updateEventSchema } from '@/types/schemas';
 
 type Params = {
     id: string;
@@ -19,7 +20,13 @@ export async function PUT(req: Request, { params: { id }}: { params: Params }) {
             return Response.json({ message: 'Event not found', code: 404, success: false }, { status: 404 });
         }
 
-        const newEvent = { ...events[index], ...body };
+        const parsedData = updateEventSchema.safeParse(body);
+
+        if (!parsedData.success) {
+            return Response.json({ message: 'Invalid event data', code: 400, success: false }, { status: 400 });
+        }
+
+        const newEvent = { ...events[index], ...parsedData.data };
 
         events[index] = newEvent;
         await writeEvents(events);
