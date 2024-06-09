@@ -1,8 +1,31 @@
 /**
  * @jest-environment node
  */
-import { PUT, DELETE } from "./route";
+import { PUT, DELETE, GET } from "./route";
 import { readEvents } from '@/utils/fileHandler';
+
+describe('GET /events/:id', () => {
+  it('should return an event', async () => {
+    const events = await readEvents();
+
+    const mockRes = {
+      json: jest.fn(),
+    } as any;
+
+    const res = await GET(mockRes, { params: { id: events[0].id } });
+    const body = await res.json();
+
+    const expectedResponse = {
+        data: events[0],
+        message: 'Event found',
+        code: 200,
+        success: true
+    }
+
+    expect(res.status).toEqual(200);
+    expect(body).toEqual(expectedResponse);
+  });
+});
 
 describe('PUT /events/:id', () => {
   it('should update an event', async () => {

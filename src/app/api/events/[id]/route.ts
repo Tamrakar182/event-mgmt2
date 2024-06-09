@@ -5,6 +5,22 @@ type Params = {
     id: string;
 }
 
+export async function GET(req: Request, { params: { id }}: { params: Params }) {
+    try {
+        const events = await readEvents();
+        const event = events.find((obj) => obj.id === id);
+
+        if (!event) {
+            return Response.json({ message: 'Event not found', code: 404, success: false }, { status: 404 });
+        }
+
+        return Response.json({ data: event, message: 'Event found', code: 200, success: true }, { status: 200 });
+    } catch(err) {
+        console.error(err);
+        return Response.json({ message: 'Error fetching event', code: 500, success: false }, { status: 500 });
+    }
+}
+
 export async function PUT(req: Request, { params: { id }}: { params: Params }) {
     try {
         const events = await readEvents();

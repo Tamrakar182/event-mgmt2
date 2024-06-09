@@ -1,11 +1,10 @@
 "use client";
 import useEvents from '@/hooks/useEvents';
+import { IEvent } from '@/types/event';
 import { useRouter } from 'next/navigation';
-import useSWR from 'swr';
-import { getEvents } from '@/utils/api';
 
 export default function EventListSection() {
-    const { data, isLoading, error } = useSWR("/api/events", getEvents);
+    const { data, isLoading, error, removeEvent } = useEvents();
 
     const router = useRouter();
 
@@ -14,11 +13,11 @@ export default function EventListSection() {
     if (!data) return (<div>No data</div>)
 
     const onEdit = (id: string) => {
-        router.push(`/events/${id}`)
+        router.push(`/events/${id}/edit`)
     }
 
-    const onDelete = (id: string) => {
-        console.log('Delete', id);
+    const onDelete = (event: IEvent) => {
+        removeEvent(event);
     }
 
     const onCreate = () => {
@@ -42,6 +41,7 @@ export default function EventListSection() {
                                 <th className="px-4 py-2">SN.</th>
                                 <th className="px-4 py-2">Title</th>
                                 <th className="px-4 py-2">Description</th>
+                                <th className="px-4 py-2">Total Participants</th>
                                 <th className="px-4 py-2">Start Date</th>
                                 <th className="px-4 py-2">End Date</th>
                                 <th className="px-4 py-2">Actions</th>
@@ -53,6 +53,7 @@ export default function EventListSection() {
                                     <td className="border px-4 py-2 text-center">{index + 1}</td>
                                     <td className="border px-4 py-2 text-center">{event.title}</td>
                                     <td className="border px-4 py-2 text-center">{event.description}</td>
+                                    <td className="border px-4 py-2 text-center">{event.totalParticipants}</td>
                                     <td className="border px-4 py-2 text-center">{event.startDate}</td>
                                     <td className="border px-4 py-2 text-center">{event.endDate}</td>
                                     <td className="border px-4 py-2">
@@ -63,7 +64,7 @@ export default function EventListSection() {
                                             >✏</button>
                                             <button
                                                 className="bg-red-500 hover:bg-red-700 py-2 px-4 rounded"
-                                                onClick={() => onDelete(event.id)}
+                                                onClick={() => onDelete(event)}
                                             >🚮</button>
                                         </div>
                                     </td>

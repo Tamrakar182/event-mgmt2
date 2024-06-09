@@ -8,7 +8,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Snackbar from "./common/Snackbar";
-import { createEvent } from "@/utils/api";
+import api from "@/utils/api";
 
 interface Props {
     event?: IEvent;
@@ -21,7 +21,6 @@ const EventSchema: ZodType<Omit<IEvent, 'id'>> = z.object({
     startDate: z.string().min(1, "Start Date is required"),
     endDate: z.string().min(1, "End Date is required"),
 });
-
 
 const EventCreateEditForm = ({ event }: Props) => {
     const router = useRouter();
@@ -53,9 +52,25 @@ const EventCreateEditForm = ({ event }: Props) => {
 
     const onSubmit = async (data: any) => {
         try {
-            await createEvent(data);
-            Snackbar.success("Successfully added the new event.");
-            router.push("/events")
+            if (event) {
+                const res = await api.put(`/events/${event.id}/`, data);
+                if (res.data.success) {
+                    Snackbar.success("Successfully updated the event.");
+                    router.push("/events");
+                    return;
+                } else {
+                    Snackbar.error(res.data.message);
+                }
+            }
+            const res = await api.post("/events/", data);
+            if (res.data.success) {
+                Snackbar.success("Successfully added the new event.");
+                router.push("/events");
+                return;
+            } else {
+                Snackbar.error(res.data.message);
+            }
+
         } catch (e) {
             Snackbar.error("Failed to add the new item.");
         }
