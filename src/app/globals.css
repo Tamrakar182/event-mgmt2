@@ -18,22 +18,29 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer components {
   .content-container {
     @apply max-w-[1440px] w-full mx-auto px-8;
   }
+
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .input-box>input:focus~label,
+  .input-box>input:not(:placeholder-shown)~label {
+    @apply -translate-y-2 text-xs;
+  }
+
+  input:focus~label {
+    @apply left-0;
   }
 }
