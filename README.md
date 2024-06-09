@@ -2,18 +2,20 @@
 
 This is the task of Young Innovations Internship for Backend development. I have decided to do the project in Nextjs to tightly integrate both the frontend and backend in a single repository.
 
+Check it out here: [Link](https://event-mgmt2.vercel.app/)
+
 ## Features
 
 - CRUD for an event management web app
 - Filtering API
-- Login System (TODO)
+- Login System
 - Frontend and Backend data validation
 
 ## Requirements
 
 In order to run the project, you need to have node installed on your machine.
 
-## Steps to run
+## Steps to run a dev enviroment
 
 1. Clone the repository
 ```shell
@@ -25,7 +27,12 @@ git clone
 npm install
 ```
 
-3. Run the development server
+3. Copy over the environment variables
+```shell
+cp .env.example .env
+```
+
+4. Run the development server
 ```shell
 npm run dev
 ```

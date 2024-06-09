@@ -17,13 +17,15 @@ type IAuthContext = {
 
 const AuthContext = createContext<IAuthContext | null>(null);
 
+const domain = process.env.NODE_ENV === 'production' ? 'event-mgmt2.vercel.app' : 'localhost';
+
 export const AuthProvider = ({ children }: Props) => {
     const [authenticated, setAuthenticated] = useState(getCookie('token') ? true : false);
     const router = useRouter();
     const pathname = usePathname();
 
     const handleLogout = () => {
-        deleteCookie("token", { path: '/', domain: 'localhost' });
+        deleteCookie("token", { path: '/', domain: domain });
         setAuthenticated(false);
         router.push('/');
     };
