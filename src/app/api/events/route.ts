@@ -1,10 +1,25 @@
 import { readEvents, writeEvents } from '@/utils/fileHandler';
 import { createEventSchema } from '@/types/schemas';
 
-export async function GET() {
+export async function GET(req: Request) {
     try {
         const events = await readEvents();
-        return Response.json({ data: events, message: 'Events fetched successfully', code: 200, success: true }, { status: 200 });
+
+        const url = new URL(req.url)
+
+        const search = url.searchParams.get("search")
+        const startDate = url.searchParams.get("startDate")
+        const endDate = url.searchParams.get("endDate")
+
+        const filteredEvents = events.filter((event) => {
+            const matchesSearchTerm = search ? event.title.toLowerCase().includes(search.toLowerCase()) : true;
+            const matchesStartDate = startDate ? new Date(event.startDate) >= new Date(startDate) : true;
+            const matchesEndDate = endDate ? new Date(event.endDate) <= new Date(endDate) : true;
+      
+            return matchesSearchTerm && matchesStartDate && matchesEndDate;
+          });
+
+        return Response.json({ data: filteredEvents, message: 'Events fetched successfully', code: 200, success: true }, { status: 200 });
     } catch {
         return Response.json({ message: 'Error adding event', code: 500, success: false }, { status: 500 });
     }

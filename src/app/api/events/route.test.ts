@@ -6,8 +6,12 @@ import { POST, GET } from './route';
 
 describe('GET /events', () => {
     it('should get all events', async () => {
+        const mockReq = {
+            json: jest.fn(),
+          } as any;
+
         const events = await readEvents();   
-        const res = await GET();
+        const res = await GET(mockReq);
         const body = await res.json();
 
         const expectedResponse = {

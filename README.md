@@ -5,7 +5,7 @@ This is the task of Young Innovations Internship for Backend development. I have
 ## Features
 
 - CRUD for an event management web app
-- Filtering API (TODO)
+- Filtering API
 - Login System (TODO)
 - Frontend and Backend data validation
 

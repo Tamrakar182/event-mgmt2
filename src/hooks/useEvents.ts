@@ -2,12 +2,18 @@ import useSWR from 'swr';
 import { IEvent } from '@/types/event';
 import api from '@/utils/api';
 
-const useEvents = (callback?: Function) => {
+interface Props {
+  searchTerm?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+const useEvents = ({searchTerm = '', startDate = '', endDate = ''}: Props) => {
   const fetcher = (url: string) => api.get(url).then((res) => res.data.data);
 
-  const { data, error, mutate, isLoading } = useSWR<IEvent[], Error>('/events', fetcher, {
+  const { data, error, mutate, isLoading } = useSWR<IEvent[], Error>(
+    `/events?search=${searchTerm}&startDate=${startDate}&endDate=${endDate}`, fetcher, {
     onSuccess: (data, key) => {
-      if (callback) callback();
       return data;
     },
   });
