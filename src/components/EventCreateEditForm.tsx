@@ -1,30 +1,34 @@
 "use client"
 
 import { IEvent } from "@/types/event";
+import { useRouter } from "next/navigation";
 import Input from "./common/Input";
 import { useMemo, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Snackbar from "./common/Snackbar";
+import { createEvent } from "@/utils/api";
 
 interface Props {
     event?: IEvent;
 }
 
 const EventSchema: ZodType<Omit<IEvent, 'id'>> = z.object({
-    title: z.string().nonempty("Event Title is required"),
-    description: z.string().nonempty("Event Description is required"),
+    title: z.string().min(1, "Event Title is required"),
+    description: z.string().min(1, "Event Description is required"),
     totalParticipants: z.number().min(1, "Total Participants must be at least 1"),
-    startDate: z.string().nonempty("Start Date is required"),
-    endDate: z.string().nonempty("End Date is required"),
+    startDate: z.string().min(1, "Start Date is required"),
+    endDate: z.string().min(1, "End Date is required"),
 });
 
 
 const EventCreateEditForm = ({ event }: Props) => {
+    const router = useRouter();
 
     const defaultValue = useMemo(() => ({
         title: event?.title || '',
-        description: event?.description ||'',
+        description: event?.description || '',
         totalParticipants: event?.totalParticipants || 0,
         startDate: event?.startDate || '',
         endDate: event?.endDate || '',
@@ -34,7 +38,7 @@ const EventCreateEditForm = ({ event }: Props) => {
         resolver: zodResolver(EventSchema),
         defaultValues: defaultValue,
     });
-    
+
     const {
         handleSubmit,
         reset,
@@ -42,13 +46,19 @@ const EventCreateEditForm = ({ event }: Props) => {
 
     useEffect(() => {
         if (event) {
-          reset(defaultValue);
+            reset(defaultValue);
         }
-      }, [event, defaultValue, reset]);
+    }, [event, defaultValue, reset]);
 
 
-    const onSubmit = (data: any) => {
-        console.log(data);
+    const onSubmit = async (data: any) => {
+        try {
+            await createEvent(data);
+            Snackbar.success("Successfully added the new event.");
+            router.push("/events")
+        } catch (e) {
+            Snackbar.error("Failed to add the new item.");
+        }
     };
 
     return (

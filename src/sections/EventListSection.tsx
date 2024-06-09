@@ -1,9 +1,12 @@
 "use client";
 import useEvents from '@/hooks/useEvents';
 import { useRouter } from 'next/navigation';
+import useSWR from 'swr';
+import { getEvents } from '@/utils/api';
 
 export default function EventListSection() {
-    const { data, isLoading, error } = useEvents();
+    const { data, isLoading, error } = useSWR("/api/events", getEvents);
+
     const router = useRouter();
 
     if (isLoading) return (<div>Loading...</div>)
