@@ -26,6 +26,12 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+@layer components {
+  .content-container {
+    @apply max-w-[1440px] w-full mx-auto px-8;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

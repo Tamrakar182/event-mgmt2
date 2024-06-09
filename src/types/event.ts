@@ -7,3 +7,9 @@ export interface IEvent {
     endDate: string;
   }
   
+export interface IRequestType {
+    data: IEvent[];
+    status: number;
+    message: string;
+    success: boolean;
+}
